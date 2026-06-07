@@ -3,7 +3,6 @@ async function fetchData() {
     
     document.getElementById('fetchText').textContent = 'Fetching data...';
     try {
-
         const pokemonName = document.getElementById('pokemonInput').value.toLowerCase().replace(" ", "-");
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
 
@@ -137,11 +136,12 @@ async function fetchData() {
 
         document.querySelectorAll('.damage-multipliers-content').forEach(el => el.remove());
 
+        damageDiv = document.getElementById('damage-multipliers-container');
         let newDiv, newImg, newH2;
         for(const [key, value] of Object.entries(damageMultipliers)) {
             newDiv = document.createElement('div');
             newDiv.classList.add('damage-multipliers-container');
-            document.getElementById('body').appendChild(newDiv);
+            damageDiv.appendChild(newDiv);
 
             newImg = document.createElement('img');
             newImg.src = `images/pokemon_types/Type_${key.charAt(0).toUpperCase() + key.substring(1)}_HOME.webp`;
@@ -153,6 +153,80 @@ async function fetchData() {
             newH2.classList.add('damage-multipliers-content');
             newDiv.appendChild(newH2);
         }
+
+        const maleImg = document.getElementById('maleSprite');
+        const femaleImg = document.getElementById('femaleSprite');
+
+        document.getElementById('genderDifferencesText').textContent = '';
+
+        maleImg.src = '';
+        maleImg.style.display = 'none';
+        maleImg.title = '';
+        document.getElementById('maleIcon').style.display = 'none';
+
+        femaleImg.src = '';
+        femaleImg.style.display = 'none';
+        femaleImg.title = '';
+        document.getElementById('femaleIcon').style.display = 'none';
+
+        if(data.sprites.front_female) {
+            document.getElementById('genderDifferencesText').textContent = 'Gender differences:';
+
+            maleImg.src = pokemonSprite;
+            maleImg.style.display = 'block';
+            maleImg.title = `${name} male sprite`;
+            document.getElementById('maleIcon').style.display = 'block';
+
+            femaleImg.src = data.sprites.front_female;
+            femaleImg.style.display = 'block';
+            femaleImg.title = `${name} female sprite`;
+            document.getElementById('femaleIcon').style.display = 'block';
+        }
+
+        document.querySelectorAll('.abilities').forEach(el => el.remove());
+        document.getElementById('abilitiesText').textContent = 'Abilities:';
+        for(const item of data.abilities) {
+            newH2 = document.createElement('h2');
+            if(item.is_hidden) {
+                newH2.textContent = `  ${item.ability.name} (hidden)`;
+            }
+            else {
+                newH2.textContent = `  ${item.ability.name}`;
+            }
+            newH2.classList.add('text', 'abilities');
+            document.getElementById('abilities-container').appendChild(newH2);
+        }
+
+        const heightM = data.height / 10;
+        const heightIn = Math.round(heightM * 39,3700787402);
+        document.getElementById('height').textContent = `Height: ${heightM} m (${Math.floor(heightIn/12)}'${Math.round(heightIn%12)}")`;
+
+        const weightKg = data.weight / 10;
+        const weightLbs = Math.round(weightKg * 2.20462262185 * 10) / 10;
+        document.getElementById('weight').textContent = `Weight: ${weightKg} kg (${weightLbs} lbs)`;
+
+        /*
+        const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+        if(!evolutionResponse.ok) {
+            throw new Error('Could not fetch evolution chain data');
+        }
+        const evolutionData = await evolutionResponse.json();
+
+        document.getElementById('evolvesFromText').textContent = '';
+        
+        let evolutionChain = [];
+
+        evolutionChain[0] = {
+            name: evolutionData.chain.species.name,
+        }
+        if(evolutionData.chain.evolves_to.length !== 0) {
+            evolutionChain[1] = [];
+            for(const item of evolutionData.chain.evolves_to) {
+                evolutionChain[1].push({
+                    name: 
+                })
+            }
+        }*/
     }
     catch(error) {
         console.error(error);
@@ -167,18 +241,18 @@ async function fetchData() {
                 fetchTextContainer.appendChild(newP);
 
                 newP = document.createElement('p');
-                newP.classList.add('meanText');
+                newP.classList.add('meanText', 'clickable');
                 newP.id = 'shaymin-land'
                 newP.textContent = 'shaymin-land'
                 fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'changeInputText(\'shaymin-land\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                newP.setAttribute('onclick', 'fetchNewInput(\'shaymin-land\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
             
                 newP = document.createElement('p');
-                newP.classList.add('meanText');
+                newP.classList.add('meanText', 'clickable');
                 newP.id = 'shaymin-sky'
                 newP.textContent = 'shaymin-sky'
                 fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'changeInputText(\'shaymin-sky\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                newP.setAttribute('onclick', 'fetchNewInput(\'shaymin-sky\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
                 break;
             case 'nidoran':
                 newP = document.createElement('p');
@@ -187,23 +261,26 @@ async function fetchData() {
                 fetchTextContainer.appendChild(newP);
 
                 newP = document.createElement('p');
-                newP.classList.add('meanText');
+                newP.classList.add('meanText', 'clickable');
                 newP.id = 'nidoran-m'
                 newP.textContent = 'nidoran-m'
                 fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'changeInputText(\'nidoran-m\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                newP.setAttribute('onclick', 'fetchNewInput(\'nidoran-m\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
             
                 newP = document.createElement('p');
-                newP.classList.add('meanText');
+                newP.classList.add('meanText', 'clickable');
                 newP.id = 'nidoran-f'
                 newP.textContent = 'nidoran-f'
                 fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'changeInputText(\'nidoran-f\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                newP.setAttribute('onclick', 'fetchNewInput(\'nidoran-f\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                break;
+            case 'pyroar':
+                fetchNewInput('pyroar-male');
                 break;
         }
     }
 }
-function changeInputText(text) {
+function fetchNewInput(text) {
     document.getElementById('pokemonInput').value = text;
     fetchData();
 }

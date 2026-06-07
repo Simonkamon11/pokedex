@@ -85,15 +85,15 @@ body{
     margin-top: 0px;
     margin-bottom: 0px;
 }
-#shinyImages-container{
+.corner-icon-container{
     position: relative;
 }
-#shiny-sparkles{
+.corner-icon{
     position: absolute;
     top: 0;
     right: 0;
-    width: 40px;
-    height: auto;
+    height: 40px;
+    width: auto;
 }
 #pokedexNr{
     margin-top: 5px;
@@ -108,7 +108,10 @@ body{
 #baseStatTotal{
     margin-top: 15px;
 }
-#damageMultipliers{
+.title-text{
+    color: rgb(15,56,15);
+    font-family: "Bitcount Single", "consolas", sans-serif;
+
     margin-bottom: 15px;
     font-size: 30px;
 }
@@ -154,4 +157,44 @@ body{
     font-style: italic;
 
     text-decoration: underline;
+}
+#gender-container{
+    display: flex;
+    justify-content: gap;
+    gap: 15px;
+}
+#maleIcon{
+    filter: invert(24%) sepia(96%) saturate(7495%) hue-rotate(218deg) brightness(97%) contrast(101%);
+}
+#femaleIcon{
+    filter: invert(49%) sepia(95%) saturate(2500%) hue-rotate(290deg) brightness(105%) contrast(102%);
+}
+#abilitiesText{
+    color: rgb(15,56,15);
+    font-family: "Bitcount Single", "consolas", sans-serif;
+    
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+.abilities{
+    white-space: pre;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#height{
+    margin-bottom: 5px;
+}
+#weight{
+    margin-top: 5px;
+}
+.clickable:hover{
+    cursor: pointer;
+}
+#preEvoText{
+    color: rgb(15,56,15);
+    font-family: "Bitcount Single", "consolas", sans-serif;
+
+    margin-bottom: 15px;
+    margin-top: 0px;
+    font-size: 40px;
 }

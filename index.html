@@ -11,7 +11,7 @@
 <body id="body">
     <h1 id="title" class="text">Pokédex</h1>
     <input type="text" id="pokemonInput" placeholder="Enter Pokémon name">
-    <button onclick="fetchData()" id="fetch-button">Fetch data</button><br>
+    <button onclick="fetchData()" id="fetch-button" class="clickable">Fetch data</button><br>
     <div id="fetchText-container">
         <p id="fetchText" class="text"></p>
     </div>
@@ -24,9 +24,9 @@
     <h2 id="pokemonSpecies" class="text"></h2>
     <div id="pokemonImages-container">
         <img src="" alt="Pokémon Sprite" id="pokemonSprite" style="display: none;" class="pokemonImages">
-        <div id="shinyImages-container">
+        <div class="corner-icon-container">
             <img src="" alt="Pokémon Shiny Sprite" id="shinySprite" style="display: none;" class="pokemonImages"> 
-            <img src="images/shiny_sparkles.png" alt="shiny sparkles" id="shiny-sparkles" style="display: none;">
+            <img src="images/shiny_sparkles.png" alt="shiny sparkles" id="shiny-sparkles" class="corner-icon" style="display: none;">
         </div>
     </div>
 
@@ -41,7 +41,30 @@
 
     <h2 id="baseStatTotal" class="text"></h2>
 
-    <h2 id="damageMultipliers" class="text"></h2>
+    <h2 id="damageMultipliers" class="title-text"></h2>
+    <div id="damage-multipliers-container"></div>
+
+    <h2 id="genderDifferencesText" class="title-text"></h2>
+
+    <div id="gender-container">
+        <div class="corner-icon-container">
+            <img src="" alt="Pokémon Male Sprite" id="maleSprite" style="display: none;" class="pokemonImages"> 
+            <img src="images/male.png" alt="male icon" id="maleIcon" class="corner-icon" style="display: none;">
+        </div>
+        <div class="corner-icon-container">
+            <img src="" alt="Pokémon Female Sprite" id="femaleSprite" style="display: none;" class="pokemonImages">
+            <img src="images/female.png" alt="female icon" id="femaleIcon" class="corner-icon" style="display: none;">
+        </div>
+    </div>
+
+    <h2 id="abilitiesText"></h2>
+    <div id="abilities-container"></div>
+
+    <h2 id="height" class="text"></h2>
+    <h2 id="weight" class="text"></h2>
+
+    <h2 id="evolvesFromText" class="title-text"></h2>
+    <h2 id="preEvoText" class="clickable"></h2>
 
     <script src="index.js"></script>
 </html>
