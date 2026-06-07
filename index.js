@@ -135,7 +135,9 @@ async function fetchData() {
             Object.entries(damageMultipliers).filter(([k, v]) => v !== 1)
         );
 
-        let newDiv, newImg, newH2, newH2Text;
+        document.querySelectorAll('.damage-multipliers-content').forEach(el => el.remove());
+
+        let newDiv, newImg, newH2;
         for(const [key, value] of Object.entries(damageMultipliers)) {
             newDiv = document.createElement('div');
             newDiv.classList.add('damage-multipliers-container');
@@ -143,15 +145,65 @@ async function fetchData() {
 
             newImg = document.createElement('img');
             newImg.src = `images/pokemon_types/Type_${key.charAt(0).toUpperCase() + key.substring(1)}_HOME.webp`;
+            newImg.classList.add('damage-multipliers-content');
             newDiv.appendChild(newImg);
 
             newH2 = document.createElement('h2');
             newH2.textContent = `${key.charAt(0).toUpperCase() + key.substring(1)}: x${value}`;
+            newH2.classList.add('damage-multipliers-content');
             newDiv.appendChild(newH2);
         }
     }
     catch(error) {
         console.error(error);
         document.getElementById('fetchText').textContent = 'Could not fetch data';
+        let fetchTextContainer = document.getElementById('fetchText-container');
+        let newP;
+        switch(document.getElementById('pokemonInput').value.toLowerCase().replace(" ", "-")) {
+            case 'shaymin':
+                newP = document.createElement('p');
+                newP.id = 'didYou';
+                newP.textContent = 'did you mean?:';
+                fetchTextContainer.appendChild(newP);
+
+                newP = document.createElement('p');
+                newP.classList.add('meanText');
+                newP.id = 'shaymin-land'
+                newP.textContent = 'shaymin-land'
+                fetchTextContainer.appendChild(newP);
+                newP.setAttribute('onclick', 'changeInputText(\'shaymin-land\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+            
+                newP = document.createElement('p');
+                newP.classList.add('meanText');
+                newP.id = 'shaymin-sky'
+                newP.textContent = 'shaymin-sky'
+                fetchTextContainer.appendChild(newP);
+                newP.setAttribute('onclick', 'changeInputText(\'shaymin-sky\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                break;
+            case 'nidoran':
+                newP = document.createElement('p');
+                newP.id = 'didYou';
+                newP.textContent = 'did you mean?:';
+                fetchTextContainer.appendChild(newP);
+
+                newP = document.createElement('p');
+                newP.classList.add('meanText');
+                newP.id = 'nidoran-m'
+                newP.textContent = 'nidoran-m'
+                fetchTextContainer.appendChild(newP);
+                newP.setAttribute('onclick', 'changeInputText(\'nidoran-m\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+            
+                newP = document.createElement('p');
+                newP.classList.add('meanText');
+                newP.id = 'nidoran-f'
+                newP.textContent = 'nidoran-f'
+                fetchTextContainer.appendChild(newP);
+                newP.setAttribute('onclick', 'changeInputText(\'nidoran-f\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
+                break;
+        }
     }
+}
+function changeInputText(text) {
+    document.getElementById('pokemonInput').value = text;
+    fetchData();
 }
