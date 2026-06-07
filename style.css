@@ -94,3 +94,36 @@ body{
 #pokedexNr{
     margin-top: 5px;
 }
+.stats{
+    color: rgb(15,56,15);
+    font-family: "Bitcount Single", "consolas", sans-serif;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#baseStatTotal{
+    margin-top: 15px;
+}
+#damageMultipliers{
+    margin-bottom: 15px;
+    font-size: 30px;
+}
+.damage-multipliers-container{
+    display: flex;
+    justify-content: gap;
+    gap: 10px;
+}
+.damage-multipliers-container h2{
+    color: rgb(15,56,15);
+    font-family: "Bitcount Single", "consolas", sans-serif;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.damage-multipliers-container img{
+    width: 29px;
+    height: 29px;
+
+    margin-top: 2px;
+    margin-bottom: 5px;
+}

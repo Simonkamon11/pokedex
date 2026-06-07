@@ -23,7 +23,7 @@ async function fetchData() {
 
         let baseStatTotal = 0;
         for(const item of data.stats) {
-            baseStatTotal = baseStatTotal + item.base_stat;
+            baseStatTotal += item.base_stat;
         }
 
         const pokemonSprite = data.sprites.front_default;
@@ -64,7 +64,7 @@ async function fetchData() {
         imgShiny.src = shinySprite;
         imgShiny.style.display = 'block';
         imgShiny.title = `${name} shiny sprite`;
-        document.getElementById('shiny-sparkles').style.display = 'block'
+        document.getElementById('shiny-sparkles').style.display = 'block';
 
         for(const item of speciesData.pokedex_numbers) {
             if(item.pokedex.name === 'national') {
@@ -75,14 +75,80 @@ async function fetchData() {
 
         document.getElementById('pokedexNr').textContent = `Pokédex Nr. ${pokedexNr}`;
 
-        document.getElementById('hpStat').textContent = `HP: ${data.stats[0].base_stat}`;
-        document.getElementById('atkStat').textContent = `Attack: ${data.stats[1].base_stat}`;
-        document.getElementById('defStat').textContent = `defence: ${data.stats[2].base_stat}`;
-        document.getElementById('spAtkStat').textContent = `Sp. Atk: ${data.stats[3].base_stat}`;
-        document.getElementById('spDefStat').textContent = `Sp. Def: ${data.stats[4].base_stat}`;
-        document.getElementById('speedStat').textContent = `Speed: ${data.stats[5].base_stat}`;
+        document.getElementById('hpStat').textContent = `HP:         ${data.stats[0].base_stat}`;
+        document.getElementById('hpStat').style.whiteSpace = 'pre';
+        document.getElementById('atkStat').textContent = `Attack:     ${data.stats[1].base_stat}`;
+        document.getElementById('atkStat').style.whiteSpace = 'pre';
+        document.getElementById('defStat').textContent = `defence:    ${data.stats[2].base_stat}`;
+        document.getElementById('defStat').style.whiteSpace = 'pre';
+        document.getElementById('spAtkStat').textContent = `Sp. Atk:    ${data.stats[3].base_stat}`;
+        document.getElementById('spAtkStat').style.whiteSpace = 'pre';
+        document.getElementById('spDefStat').textContent = `Sp. Def:    ${data.stats[4].base_stat}`;
+        document.getElementById('spDefStat').style.whiteSpace = 'pre';
+        document.getElementById('speedStat').textContent = `Speed:      ${data.stats[5].base_stat}`;
+        document.getElementById('speedStat').style.whiteSpace = 'pre';
+        document.getElementById('baseStatTotal').textContent = `Total:      ${baseStatTotal}`;
+        document.getElementById('baseStatTotal').style.whiteSpace = 'pre';
 
-        document.getElementById('baseStatTotal').textContent = `Total: ${baseStatTotal}`;
+        document.getElementById('damageMultipliers').textContent = 'Damage multipliers:';
+        let damageMultipliers = {};
+        for(const item of data.types) {
+            let typeName = item.type.name;
+            let typeUrl = item.type.url;
+
+            let typeResponse = await fetch(typeUrl);
+            if(!typeResponse.ok) {
+                throw new Error(`Could not fetch ${typeName} type data`)
+            }
+            let typeData = await typeResponse.json();
+            
+            let item2Name;
+            for(const item2 of typeData.damage_relations.double_damage_from) {
+                item2Name = item2.name;
+                if(!Object.hasOwn(damageMultipliers, item2Name)) {
+                    damageMultipliers[item2Name] = 2;
+                }
+                else {
+                    damageMultipliers[item2Name] *= 2;
+                }
+            }
+            for(const item2 of typeData.damage_relations.half_damage_from) {
+                item2Name = item2.name;
+                if(!Object.hasOwn(damageMultipliers, item2Name)) {
+                    damageMultipliers[item2Name] = 0.5;
+                }
+                else {
+                    damageMultipliers[item2Name] /= 2;
+                }
+            }
+            for(const item2 of typeData.damage_relations.no_damage_from) {
+                item2Name = item2.name;
+                if(!Object.hasOwn(damageMultipliers, item2Name)) {
+                    damageMultipliers[item2Name] = 0;
+                }
+                else {
+                    damageMultipliers[item2Name] *= 0;
+                }
+            }
+        }
+        damageMultipliers = Object.fromEntries(
+            Object.entries(damageMultipliers).filter(([k, v]) => v !== 1)
+        );
+
+        let newDiv, newImg, newH2, newH2Text;
+        for(const [key, value] of Object.entries(damageMultipliers)) {
+            newDiv = document.createElement('div');
+            newDiv.classList.add('damage-multipliers-container');
+            document.getElementById('body').appendChild(newDiv);
+
+            newImg = document.createElement('img');
+            newImg.src = `images/pokemon_types/Type_${key.charAt(0).toUpperCase() + key.substring(1)}_HOME.webp`;
+            newDiv.appendChild(newImg);
+
+            newH2 = document.createElement('h2');
+            newH2.textContent = `${key.charAt(0).toUpperCase() + key.substring(1)}: x${value}`;
+            newDiv.appendChild(newH2);
+        }
     }
     catch(error) {
         console.error(error);

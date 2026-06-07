@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex</title>
+    <link rel="icon" href="images/pokeball.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
-<body>
+<body id="body">
     <h1 id="title" class="text">Pokédex</h1>
     <input type="text" id="pokemonInput" placeholder="Enter Pokémon name">
     <button onclick="fetchData()" id="fetch-button">Fetch data</button><br>
@@ -29,14 +30,16 @@
 
     <h2 id="pokedexNr" class="text"></h2>
 
-    <h2 class="text" id="hpStat"></h2>
-    <h2 class="text" id="atkStat"></h2>
-    <h2 class="text" id="defStat"></h2>
-    <h2 class="text" id="spAtkStat"></h2>
-    <h2 class="text" id="spDefStat"></h2>
-    <h2 class="text" id="speedStat"></h2>
+    <h2 class="stats" id="hpStat"></h2>
+    <h2 class="stats" id="atkStat"></h2>
+    <h2 class="stats" id="defStat"></h2>
+    <h2 class="stats" id="spAtkStat"></h2>
+    <h2 class="stats" id="spDefStat"></h2>
+    <h2 class="stats" id="speedStat"></h2>
 
     <h2 id="baseStatTotal" class="text"></h2>
+
+    <h2 id="damageMultipliers" class="text"></h2>
 
     <script src="index.js"></script>
 </html>
