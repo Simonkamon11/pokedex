@@ -27,9 +27,13 @@ body{
     margin-bottom: 0px;
 }
 #title{
+    font-size: 50px;
+    margin-bottom: 0;
+}
+#owner{
     border-bottom-style: solid;
     border-width: 6px;
-    font-size: 50px;
+    margin-top: 0;
 }
 .text{
     color: rgb(15,56,15);
