@@ -1,15 +1,20 @@
 body{
-    background-color: rgb(155,188,15);
+    /* background-color: rgb(155,188,15); */
+    background-color: rgb(220, 10, 45);
+    /* color: rgb(15,56,15); */
+    color: rgb(0, 0, 0);
 }
 #pokemonImages-container{
     display: flex;
     gap: 15px;
 }
 .pokemonImages{
-    background-color: rgb(139,172,15);
+    /* background-color: rgb(139,172,15); */
+    background-color: rgb(41, 170, 253);
 
     border-style: solid;
-    border-color: rgb(15,56,15);
+    /* border-color: rgb(15,56,15); */
+    border-color: rgb(0, 0, 0);
     border-width: 5px;
     border-radius: 5px;
 
@@ -36,13 +41,12 @@ body{
     margin-top: 0;
 }
 .text{
-    color: rgb(15,56,15);
 
     font-family: "Bitcount Single", "consolas", sans-serif;
 }
 #fetch-button{
-    background-color: rgb(139,172,15);
-    color: rgb(15,56,15);
+    /* background-color: rgb(139,172,15); */
+    background-color: rgb(41, 170, 253);
 
     font-family: "Bitcount Single", "consolas", sans-serif;
     font-size: 20px;
@@ -50,7 +54,8 @@ body{
     padding: 3px;
 
     border-style: solid;
-    border-color: rgb(15,56,15);
+    /* border-color: rgb(15,56,15); */
+    border-color: rgb(0, 0, 0);
     border-width: 2px;
     border-radius: 8px;
 }
@@ -59,12 +64,12 @@ body{
     font-size: 20px;
 
     background-color: white;
-    color: rgb(15,56,15);
 
     padding: 3px;
 
     border-style: solid;
-    border-color: rgb(15,56,15);
+    /* border-color: rgb(15,56,15); */
+    border-color: rgb(0, 0, 0);
     border-width: 2px;
     border-radius: 8px;
 }
@@ -74,7 +79,6 @@ body{
     border-bottom-style: solid;
     border-width: 6px;
 
-    color: rgb(15,56,15);
 
     font-family: "Bitcount Single", "consolas", sans-serif;
 }
@@ -101,7 +105,6 @@ body{
     margin-top: 5px;
 }
 .stats{
-    color: rgb(15,56,15);
     font-family: "Bitcount Single", "consolas", sans-serif;
 
     margin-top: 5px;
@@ -111,7 +114,6 @@ body{
     margin-top: 15px;
 }
 .title-text{
-    color: rgb(15,56,15);
     font-family: "Bitcount Single", "consolas", sans-serif;
 
     margin-bottom: 15px;
@@ -122,7 +124,6 @@ body{
     gap: 10px;
 }
 .damage-multipliers-container h2{
-    color: rgb(15,56,15);
     font-family: "Bitcount Single", "consolas", sans-serif;
 
     margin-top: 5px;
@@ -143,12 +144,10 @@ body{
     font-size: 20px;
     padding-bottom: 10px;
 
-    color: rgb(15,56,15);
 
     font-family: "Bitcount Single", "consolas", sans-serif;
 }
 .meanText{
-    color: rgb(15,56,15);
     font-family: "Bitcount Single", "consolas", sans-serif;
 
     font-size: 20px;
@@ -169,7 +168,6 @@ body{
     filter: invert(49%) sepia(95%) saturate(2500%) hue-rotate(290deg) brightness(105%) contrast(102%);
 }
 #abilitiesText{
-    color: rgb(15,56,15);
     font-family: "Bitcount Single", "consolas", sans-serif;
     
     margin-bottom: 10px;
@@ -190,7 +188,6 @@ body{
     cursor: pointer;
 }
 #preEvoText{
-    color: rgb(15,56,15);
     font-family: "Bitcount Single", "consolas", sans-serif;
 
     margin-bottom: 15px;
