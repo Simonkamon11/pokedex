@@ -1,6 +1,9 @@
 switchTheme('pokedex');
 
 async function fetchData() {
+    const didYou = document.getElementById('didYou');
+    if (didYou !== null) {didYou.remove();}
+    document.querySelectorAll('.meanText').forEach(el => el.remove());
     
     document.getElementById('fetchText').textContent = 'Fetching data...';
     try {
@@ -22,8 +25,8 @@ async function fetchData() {
         const speciesData = await speciesResponse.json();
 
         let baseStatTotal = 0;
-        for(const item of data.stats) {
-            baseStatTotal += item.base_stat;
+        for(const stat of data.stats) {
+            baseStatTotal += stat.base_stat;
         }
 
         const pokemonSprite = data.sprites.front_default;
@@ -232,55 +235,30 @@ async function fetchData() {
     catch(error) {
         console.error(error);
         document.getElementById('fetchText').textContent = 'Could not fetch data';
+
         const didYou = document.getElementById('didYou');
+
         if (didYou !== null) {didYou.remove();}
         document.querySelectorAll('.meanText').forEach(el => el.remove());
-        let fetchTextContainer = document.getElementById('fetchText-container');
+
+        const inputtedName = document.getElementById('pokemonInput').value.toLowerCase().replace(" ", "-");
+
+        const top3ClosestPokemonNames = await get3ClosestPokemonNames(inputtedName);
+
+        const fetchTextContainer = document.getElementById('fetchText-container');
         let newP;
-        switch(document.getElementById('pokemonInput').value.toLowerCase().replace(" ", "-")) {
-            case 'shaymin':
-                newP = document.createElement('p');
-                newP.id = 'didYou';
-                newP.textContent = 'did you mean?:';
-                fetchTextContainer.appendChild(newP);
+        newP = document.createElement('p');
+        newP.id = 'didYou';
+        newP.textContent = 'did you mean?:';
+        fetchTextContainer.appendChild(newP);
 
-                newP = document.createElement('p');
-                newP.classList.add('meanText', 'clickable');
-                newP.id = 'shaymin-land';
-                newP.textContent = 'shaymin-land';
-                fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'fetchNewInput(\'shaymin-land\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
-            
-                newP = document.createElement('p');
-                newP.classList.add('meanText', 'clickable');
-                newP.id = 'shaymin-sky';
-                newP.textContent = 'shaymin-sky';
-                fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'fetchNewInput(\'shaymin-sky\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
-                break;
-            case 'nidoran':
-                newP = document.createElement('p');
-                newP.id = 'didYou';
-                newP.textContent = 'did you mean?:';
-                fetchTextContainer.appendChild(newP);
-
-                newP = document.createElement('p');
-                newP.classList.add('meanText', 'clickable');
-                newP.id = 'nidoran-m';
-                newP.textContent = 'nidoran-m';
-                fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'fetchNewInput(\'nidoran-m\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
-            
-                newP = document.createElement('p');
-                newP.classList.add('meanText', 'clickable');
-                newP.id = 'nidoran-f';
-                newP.textContent = 'nidoran-f';
-                fetchTextContainer.appendChild(newP);
-                newP.setAttribute('onclick', 'fetchNewInput(\'nidoran-f\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());');
-                break;
-            case 'pyroar':
-                fetchNewInput('pyroar-male');
-                break;
+        for(const name of top3ClosestPokemonNames) {
+            newP = document.createElement('p');
+            newP.classList.add('meanText', 'clickable');
+            newP.id = name;
+            newP.textContent = name;
+            fetchTextContainer.appendChild(newP);
+            newP.setAttribute('onclick', `fetchNewInput(\'${name}\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());`);
         }
     }
 }
@@ -318,4 +296,88 @@ function switchTheme(theme) {
         element.style['background-color'] = themes[theme][2];
         element.style['border-color'] = themes[theme][1];
     });
+}
+
+async function getPokemonList() {
+    try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=80085');
+        if(!response.ok) {
+            throw new Error('Could not fetch data');
+        }
+
+        const data = await response.json();
+
+        let pokemonList = [];
+        for(const pokemon of data.results) {
+            pokemonList.push(pokemon.name);
+        }
+
+        return pokemonList;
+    }
+    catch(error) {
+        console.error(error);
+        return [];
+    }
+}
+
+// The code below was heavily assisted by the OpenAI chatbot ChatGPT
+async function get3ClosestPokemonNames(input) {
+    let pokemonNames = await getPokemonList();
+
+    const top3ClosestPokemonNames = pokemonNames
+        .map(name => ({
+        name,
+        score: similarityScore(input, name)
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map(x => x.name);
+    
+    return top3ClosestPokemonNames;
+}
+
+
+function levenshtein(a, b) {
+    const rows = a.length + 1;
+    const cols = b.length + 1;
+
+    const matrix = Array.from({ length: rows }, () =>
+        Array(cols).fill(0)
+    );
+
+    for (let i = 0; i < rows; i++) {
+        matrix[i][0] = i;
+    }
+
+    for (let j = 0; j < cols; j++) {
+        matrix[0][j] = j;
+    }
+
+    for (let i = 1; i < rows; i++) {
+        for (let j = 1; j < cols; j++) {
+
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+
+            matrix[i][j] = Math.min(
+                matrix[i - 1][j] + 1,
+                matrix[i][j - 1] + 1,
+                matrix[i - 1][j - 1] + cost
+            );
+        }
+    }
+
+    return matrix[a.length][b.length];
+}
+
+function similarityScore(a, b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+
+    let score = -levenshtein(a, b);
+
+    if (a.includes(b) || b.includes(a)) {
+        score += 1000;
+    }
+
+    return score;
 }
