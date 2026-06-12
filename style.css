@@ -90,14 +90,6 @@
     border-width: 2px;
     border-radius: 8px;
 }
-#fetchText{
-    font-size: 20px;
-    padding-bottom: 10px;
-    border-bottom-style: solid;
-    border-width: 6px;
-
-    font-family: "Bitcount Single", "consolas", sans-serif;
-}
 #pokemonName{
     font-size: 50px;
     margin-bottom: 0px;
@@ -157,6 +149,17 @@
     flex-wrap: wrap;
     column-gap: 15px;
     row-gap: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    border-bottom-style: solid;
+    border-width: 6px;
+}
+#fetchText{
+    font-size: 20px;
+    margin: 0;
+
+    font-family: "Bitcount Single", "consolas", sans-serif;
 }
 #didYou-container{
     display: flex;
@@ -166,8 +169,7 @@
 }
 #didYou{
     font-size: 20px;
-    padding-bottom: 10px;
-
+    margin: 0;
 
     font-family: "Bitcount Single", "consolas", sans-serif;
 }
@@ -175,7 +177,7 @@
     font-family: "Bitcount Single", "consolas", sans-serif;
 
     font-size: 20px;
-    padding-bottom: 10px;
+    margin: 0;
 
     font-style: italic;
 
