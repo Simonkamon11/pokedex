@@ -231,19 +231,19 @@ async function fetchData() {
 
         const top3ClosestPokemonNames = await get3ClosestPokemonNames(inputtedName);
 
-        const fetchTextContainer = document.getElementById('fetchText-container');
+        const didYouContainer = document.getElementById('didYou-container');
         let newP;
         newP = document.createElement('p');
         newP.id = 'didYou';
         newP.textContent = 'did you mean?:';
-        fetchTextContainer.appendChild(newP);
+        didYouContainer.appendChild(newP);
 
         for(const name of top3ClosestPokemonNames) {
             newP = document.createElement('p');
             newP.classList.add('meanText', 'clickable');
             newP.id = name;
             newP.textContent = name;
-            fetchTextContainer.appendChild(newP);
+            didYouContainer.appendChild(newP);
             newP.setAttribute('onclick', `fetchNewInput(\'${name}\'); document.getElementById(\'didYou\').remove(); document.querySelectorAll(\'.meanText\').forEach(el => el.remove());`);
         }
     }
@@ -271,7 +271,7 @@ function switchTheme(theme) {
 
     document.getElementById('pokemonInput').style['border-color'] = themes[theme][1];
 
-    document.getElementById('themes-container').style['background'] = themes[theme][2];
+    document.getElementById('themes-text-container').style['background'] = themes[theme][2];
     
     document.getElementById('themes-text').style['color'] = themes[theme][1];
     document.querySelectorAll('.theme').forEach(element => {
