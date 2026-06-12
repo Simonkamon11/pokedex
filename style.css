@@ -1,9 +1,9 @@
 #themes-container{
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 
     width: 100vw;
-    min-width: 450px;
 
     margin: -8px;
     padding: 5px;
@@ -28,6 +28,7 @@
 }
 #pokemonImages-container{
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
 }
 .pokemonImages{
@@ -58,7 +59,6 @@
     margin-top: 0;
 }
 .text{
-
     font-family: "Bitcount Single", "consolas", sans-serif;
 }
 #fetch-button{
@@ -148,6 +148,7 @@
 }
 #fetchText-container{
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
 }
 #didYou{
@@ -169,6 +170,7 @@
 }
 #gender-container{
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
 }
 #maleIcon{

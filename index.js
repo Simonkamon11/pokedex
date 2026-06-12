@@ -161,7 +161,8 @@ async function fetchData() {
         const maleImg = document.getElementById('maleSprite');
         const femaleImg = document.getElementById('femaleSprite');
 
-        document.getElementById('genderDifferencesText').textContent = '';
+        const genderDiffText = document.getElementById('genderDifferencesText');
+        genderDiffText.style.display = 'none';
 
         maleImg.src = '';
         maleImg.style.display = 'none';
@@ -174,7 +175,7 @@ async function fetchData() {
         document.getElementById('femaleIcon').style.display = 'none';
 
         if(data.sprites.front_female) {
-            document.getElementById('genderDifferencesText').textContent = 'Gender differences:';
+            genderDiffText.style.display = 'block';
 
             maleImg.src = pokemonSprite;
             maleImg.style.display = 'block';
@@ -215,22 +216,7 @@ async function fetchData() {
             throw new Error('Could not fetch evolution chain data');
         }
         const evolutionData = await evolutionResponse.json();
-
-        document.getElementById('evolvesFromText').textContent = '';
-        
-        let evolutionChain = [];
-
-        evolutionChain[0] = {
-            name: evolutionData.chain.species.name,
-        }
-        if(evolutionData.chain.evolves_to.length !== 0) {
-            evolutionChain[1] = [];
-            for(const item of evolutionData.chain.evolves_to) {
-                evolutionChain[1].push({
-                    name: 
-                })
-            }
-        }*/
+        */
     }
     catch(error) {
         console.error(error);
